@@ -1,31 +1,21 @@
-# Ex.No:3(C) ABSTRACTION
+# Ex.No:3(A) INHERITANCE AND AGGREGATION
 
 ## QUESTION:
-Description: Create abstract class GameScore with method finalScore(). Subclasses:
+A jewelry store tracks gold rates for different types of customers. The base class is Customer with attributes like customerId, name, and purchaseWeight (in grams). There are two types of customers: RegularCustomer and PremiumCustomer. RegularCustomer gets a fixed discount of 2% on the gold rate per gram. PremiumCustomer gets a 5% discount plus a special cashback. The base gold rate per gram is input at runtime. For each customer, calculate the final price they pay:
 
-ArcadeGame: score = baseScore + (level × 100)
+finalPrice = purchaseWeight * (goldRatePerGram - discount)
 
-PuzzleGame: score = (attempts ≤ 3) ? 1000 - (attempts × 100) : 500
-
-Input Format:
-
-First line: 1 or 2 Second line: base, level (or attempts)
-
-Output Format:
-
-Final score (int)
+For PremiumCustomer, additionally show cashback amount (which is 1% of the final price).
 
 ## AIM:
-To write a Java program using an abstract class GameScore with subclasses ArcadeGame and PuzzleGame, each implementing its own finalScore() method.
+To write a Java program using inheritance to calculate the final gold price for different types of customers (Regular and Premium) based on discounts and cashback.
 
 ## ALGORITHM :
 1.	Start the program.
 2.	Import the necessary package 'java.util'
-3.	Define subclass PuzzleGame where
-4.	If attempts ≤ 3, score = 1000 - (attempts × 100)
-5.	Else score = 500.
-6.	Take user input for game type and relevant values.
-7.	Display the final score based on game type.
+3. Define PremiumCustomer subclass with a 5% discount and 1% cashback on the final price.
+4.	Input the base gold rate per gram at runtime.
+5.	For each customer, calculate and display the final price (and cashback for premium). 	
 
 
 
@@ -34,58 +24,126 @@ To write a Java program using an abstract class GameScore with subclasses Arcade
 ## PROGRAM:
  ```
 /*
-Program to implement a Abstraction using Java
-Developed by: Hema Lokitha P
-RegisterNumber: 212223110014
+Program to implement a Inheritance and Aggregation using Java
+Developed by: HEMA LOKITHA P
+RegisterNumber:  212223110014
 */
 ```
 
 ## SOURCE CODE:
 ```java
-import java.util.*;
+import java.util.Scanner;
+import java.text.DecimalFormat;
 
-abstract class GameScore {
-    abstract int finalScore();
+class Customer {
+    String customerId, name;
+    double purchaseWeight, goldRatePerGram;
+
+    Customer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
+        this.customerId = customerId;
+        this.name = name;
+        this.purchaseWeight = purchaseWeight;
+        this.goldRatePerGram = goldRatePerGram;
+    }
+
+    double getDiscountRate() {
+        return 0; // Default: no discount
+    }
+
+    double calculateFinalPrice() {
+        double discountAmount = goldRatePerGram * getDiscountRate() / 100;
+        double effectiveRate = goldRatePerGram - discountAmount;
+        return purchaseWeight * effectiveRate;
+    }
+
+    void display() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Name: " + name);
+        System.out.println("Customer Type: General");
+        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
+        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
+        System.out.println("Discount: " + (int)getDiscountRate() + "%");
+        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
+    }
 }
 
-class ArcadeGame extends GameScore {
-    int base, level;
-    ArcadeGame(int base, int level) {
-        this.base = base;
-        this.level = level;
+class RegularCustomer extends Customer {
+    RegularCustomer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
+        super(customerId, name, purchaseWeight, goldRatePerGram);
     }
-    int finalScore() {
-        return base + (level * 100);
+
+    @Override
+    double getDiscountRate() {
+        return 2.0;
+    }
+
+    @Override
+    void display() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Name: " + name);
+        System.out.println("Customer Type: Regular");
+        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
+        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
+        System.out.println("Discount: " + (int)getDiscountRate() + "%");
+        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
     }
 }
 
-class PuzzleGame extends GameScore {
-    int attempts;
-    PuzzleGame(int attempts) {
-        this.attempts = attempts;
+class PremiumCustomer extends Customer {
+    PremiumCustomer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
+        super(customerId, name, purchaseWeight, goldRatePerGram);
     }
-    int finalScore() {
-        if (attempts <= 3)
-            return 1000 - (attempts * 100);
-        else
-            return 500;
+
+    @Override
+    double getDiscountRate() {
+        return 5.0;
+    }
+
+    double getCashback() {
+        return calculateFinalPrice() * 0.01;
+    }
+
+    @Override
+    void display() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Name: " + name);
+        System.out.println("Customer Type: Premium");
+        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
+        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
+        System.out.println("Discount: " + (int)getDiscountRate() + "%");
+        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
+        System.out.println("Cashback: " + df.format(getCashback()));
     }
 }
 
 public class prog {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int type = sc.nextInt();
-        if (type == 1) {
-            int base = sc.nextInt();
-            int level = sc.nextInt();
-            ArcadeGame game = new ArcadeGame(base, level);
-            System.out.println(game.finalScore());
-        } else if (type == 2) {
-            int attempts = sc.nextInt();
-            PuzzleGame game = new PuzzleGame(attempts);
-            System.out.println(game.finalScore());
+
+        while (sc.hasNext()) {
+            String type = sc.next();
+            String customerId = sc.next();
+            String name = sc.next();
+            double weight = sc.nextDouble();
+            double goldRate = sc.nextDouble();
+
+            Customer c;
+            if (type.equalsIgnoreCase("Regular")) {
+                c = new RegularCustomer(customerId, name, weight, goldRate);
+            } else if (type.equalsIgnoreCase("Premium")) {
+                c = new PremiumCustomer(customerId, name, weight, goldRate);
+            } else {
+                c = new Customer(customerId, name, weight, goldRate);
+            }
+
+            c.display();
+            System.out.println();
         }
+
+        sc.close();
     }
 }
 ```
@@ -96,9 +154,10 @@ public class prog {
 
 
 ## OUTPUT:
-<img width="1147" height="386" alt="image" src="https://github.com/user-attachments/assets/bd53fa2c-3a84-4505-a71b-a5d98040f5ba" />
 
+
+<img width="1290" height="746" alt="image" src="https://github.com/user-attachments/assets/5a74858f-886a-4573-98a5-b9cefef91af2" />
 
 
 ## RESULT:
-The program successfully demonstrates abstraction and inheritance by computing the final score for different game types using subclass-specific logic.
+The program successfully calculates and displays the final payable price for both Regular and Premium customers with applicable discounts and cashback.
