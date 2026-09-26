@@ -28,8 +28,8 @@ To implement a Composition relationship in Java where a Library contains multipl
  ```
 /*
 Program to implement a Composition Concepts in Java
-Developed by: HEMA LOKITHA P
-RegisterNumber:  212223110014
+Developed by: Krishna Kumar R
+RegisterNumber:  212223230107
 */
 ```
 
