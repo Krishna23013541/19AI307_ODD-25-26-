@@ -26,8 +26,8 @@ To write a java program to calculate the power of a given number.
 ## PROGRAM:
  ```
 Program to implement a Strings and Math Function using Java
-Developed by: 212223230145
-RegisterNumber: 212223230145
+Developed by: Krishna Kumar R
+RegisterNumber: 212223230107
 ```
 
 ## SOURCE CODE:
