@@ -22,8 +22,8 @@ To write a Java program that demonstrates method overriding using inheritance an
  ```
 /*
 Program to implement a Polymorphism using Java
-Developed by: HEMA LOKITHA P
-RegisterNumber:  212223110014
+Developed by: Krishna Kumar R
+RegisterNumber:  212223230107
 */
 ```
 
