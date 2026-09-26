@@ -46,8 +46,8 @@ To write a Java program to swap two integer values using a synchronized block to
  ```
 /*
 Program to implement a Synchronization concept using Java
-Developed by: HEMA LOKITHA P
-RegisterNumber:  212223110014
+Developed by: Krishna Kumar R
+RegisterNumber:  212223230107
 */
 ```
 
